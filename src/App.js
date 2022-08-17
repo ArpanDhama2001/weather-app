@@ -1,54 +1,50 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { ReactComponent as Icon } from "./clouds-svgrepo-com.svg";
 
-const KEY = "7JUvjrAPtgR0wBJXafH6ayybhewytjg3";
+// const location = 101264773;
 
-const options = {
-  method: "GET",
-  url: "https://api.tomorrow.io/v4/timelines",
-  params: {
-    location: "28.654200%2C%2077.237300",
-    fields: "temperature&fields=windGust&fields=windSpeed",
-    units: "imperial",
-    timesteps: "1h",
-    startTime: "now",
-    endTime: "nowPlus1h",
-    apikey: "7JUvjrAPtgR0wBJXafH6ayybhewytjg3",
-  },
-  headers: { Accept: "application/json", "Accept-Encoding": "gzip" },
-};
-
-// axios
-//   .request(options)
-//  .then(function (response) {
-//     console.log(response.data);
-//   })
-//   .catch(function (error) {
-//     console.error(error);
-//   });
-
-//   axios
-//     .request(options)
-//     .then(function (response) {
-//       console.log(response.data);
-//     })
-//     .catch(function (error) {
-//       console.error(error);
-//     });
+// const lat = 28.723151;
+// const lon = 77.302066;
 
 const App = () => {
-  const getData = async (options) => {
-    const data = await axios.get(
-      "https://api.tomorrow.io/v4/timelines?location=28.654200%2C%2077.237300&fields=temperature&fields=windGust&fields=windSpeed&units=imperial&timesteps=1h&startTime=now&endTime=nowPlus1h&apikey=7JUvjrAPtgR0wBJXafH6ayybhewytjg3"
-    );
-    console.log(data.data.data.timelines[0]);
+  const [temp, setTemp] = useState(0);
+  const [wind, setWind] = useState(0);
+
+  const options = {
+    method: "GET",
+    url: "https://foreca-weather.p.rapidapi.com/current/101264773",
+    params: {
+      alt: "0",
+      tempunit: "C",
+      windunit: "MS",
+      tz: "Europe/London",
+      lang: "en",
+    },
+    headers: {
+      "X-RapidAPI-Key": "bbedd09bb2mshe86e77d95268f4ap1402a6jsnff42fc14bb14",
+      "X-RapidAPI-Host": "foreca-weather.p.rapidapi.com",
+    },
   };
 
-  getData(options);
+  useEffect(() => {
+    return () => {
+      axios
+        .request(options)
+        .then(function (response) {
+          // console.log(response.data.current);
+          setTemp(response.data.current.temperature);
+          setWind(response.data.current.windGust);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    };
+  }, []);
 
   return (
     <div className="wrapper">
-      <h1>Delhi</h1>
+      <h1>Behta City</h1>
       {/* <svg src={cloud} fill="#fff" width="20px" height="20px" /> */}
       {/* <img src={cloud} alt="cloud" /> */}
       <Icon className="cloud" />
@@ -56,13 +52,15 @@ const App = () => {
         <div className="temp">
           <h4>Temperature: </h4>
           <h1>
-            32<span>° C</span>
+            {temp}
+            <span>° C</span>
           </h1>
         </div>
         <div className="wind-speed">
           <h4>Wind speed:</h4>
           <h1>
-            16<span>km/h</span>
+            {Math.trunc(wind)}
+            <span>km/h</span>
           </h1>
         </div>
       </div>
