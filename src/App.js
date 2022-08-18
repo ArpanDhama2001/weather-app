@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ReactComponent as Icon } from "./clouds-svgrepo-com.svg";
 
+// require("dotenv").config();
+
 // const location = 101264773;
 
 // const lat = 28.723151;
@@ -22,7 +24,7 @@ const App = () => {
       lang: "en",
     },
     headers: {
-      "X-RapidAPI-Key": "bbedd09bb2mshe86e77d95268f4ap1402a6jsnff42fc14bb14",
+      "X-RapidAPI-Key": process.env.REACT_APP_RAPID_KEY,
       "X-RapidAPI-Host": "foreca-weather.p.rapidapi.com",
     },
   };
@@ -40,6 +42,7 @@ const App = () => {
           console.error(error);
         });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
