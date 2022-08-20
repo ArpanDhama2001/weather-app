@@ -14,11 +14,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80vh;
+  height: 90vh;
 }
 
 h1 {
-  font-size: 48px;
+  font-size: 36px;
 }
 
 h4 {
@@ -27,14 +27,22 @@ h4 {
 
 .details {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
+  flex-direction: column;
   text-align: center;
-  box-shadow: 2px 2px 15px rgba(255, 255, 255, 0.1);
+  box-shadow: 2px 2px 15px rgba(255, 255, 255, 0.5);
   padding: 1rem 2rem;
   border-radius: 12px;
 }
+
+.wind {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+/* @media (min-width: 400px) .details {
+  background: crimson;
+} */
 
 .cloud {
   width: 14rem;

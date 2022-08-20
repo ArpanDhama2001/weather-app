@@ -12,6 +12,7 @@ import { ReactComponent as Icon } from "./clouds-svgrepo-com.svg";
 const App = () => {
   const [temp, setTemp] = useState(0);
   const [wind, setWind] = useState(0);
+  const [gust, setGust] = useState(0);
 
   const options = {
     method: "GET",
@@ -34,9 +35,10 @@ const App = () => {
       axios
         .request(options)
         .then(function (response) {
-          // console.log(response.data.current);
+          console.log(response.data);
           setTemp(response.data.current.temperature);
-          setWind(response.data.current.windGust);
+          setWind(response.data.current.windSpeed * (18 / 5));
+          setGust(response.data.current.windGust * (18 / 5));
         })
         .catch(function (error) {
           console.error(error);
@@ -48,8 +50,6 @@ const App = () => {
   return (
     <div className="wrapper">
       <h1>Behta City</h1>
-      {/* <svg src={cloud} fill="#fff" width="20px" height="20px" /> */}
-      {/* <img src={cloud} alt="cloud" /> */}
       <Icon className="cloud" />
       <div className="details">
         <div className="temp">
@@ -59,12 +59,21 @@ const App = () => {
             <span>° C</span>
           </h1>
         </div>
-        <div className="wind-speed">
-          <h4>Wind speed:</h4>
-          <h1>
-            {Math.trunc(wind)}
-            <span>km/h</span>
-          </h1>
+        <div className="wind">
+          <div className="wind-speed">
+            <h4>Wind speed:</h4>
+            <h1>
+              {Math.trunc(wind)}
+              <span>km/h</span>
+            </h1>
+          </div>
+          <div className="wind-gust">
+            <h4>Wind Gust:</h4>
+            <h1>
+              {Math.trunc(gust)}
+              <span>km/h</span>
+            </h1>
+          </div>
         </div>
       </div>
     </div>
